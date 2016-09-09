@@ -31,7 +31,7 @@ module Index
     include ViewPageObject::Base
 
     def hello
-      "Hello, #{@name}!"
+      content_tag :h1, "Hello, #{@name}!"
     end
   end
 end
@@ -40,7 +40,7 @@ end
 ```ruby
 app/views/index/one.html.erb
 
-<h1><%= page.hello %></h1>
+<%= page.hello %>
 ```
 
 ```ruby

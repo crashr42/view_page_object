@@ -3,7 +3,7 @@ module Index
     include ViewPageObject::Base
 
     def hello
-      "Hello, #{@name}!"
+      content_tag :h1, "Hello, #{@name}!"
     end
   end
 end

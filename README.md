@@ -9,6 +9,12 @@ It extend `helpers` concept with given advantages:
 
 ## Usage
 
+Install gem:
+
+```bash
+bin/rails g view_page_object:install
+```
+
 Create controller with action:
 
 ```bash

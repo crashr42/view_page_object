@@ -9,7 +9,17 @@ It extend `helpers` concept with given advantages:
 
 ## Usage
 
-Create file under 'app/page_objects' directory. Write you logic. And call logic from view.
+Create controller with action:
+
+```bash
+bin/rails g controller index one
+```
+
+Create page object:
+
+```bash
+bin/rails g view_page_object:page_object index one
+```
 
 ### Example
 

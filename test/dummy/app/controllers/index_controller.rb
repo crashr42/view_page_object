@@ -5,4 +5,10 @@ class IndexController < ApplicationController
 
   def two
   end
+
+  def three
+    @name = 'Mark'
+
+    render plain: page.hello
+  end
 end

@@ -2,13 +2,15 @@ module RailsPo
   class InstallGenerator < Rails::Generators::Base
     def create_initializer_file
       initializer 'rails_po.rb' do
-        'ActionController::Base.prepend RailsPo::RendererHook
+'ActionController::Base.prepend RailsPo::RendererHook
+ActionView::Helpers.prepend RailsPo::RendererHook
 
 module ApplicationHelper
   def page
     @page
   end
-end'
+end
+'
       end
 
       application "config.paths.add 'page_objects', eager_load: true"

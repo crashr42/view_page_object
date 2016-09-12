@@ -14,7 +14,7 @@ module RailsPo
 
     def render(*args)
       page_object
-      super
+      super(*args)
     end
 
     def page
@@ -23,6 +23,8 @@ module RailsPo
 
     private
     def page_object
+      return unless self.class.name.present?
+
       page_object_class = "::#{self.class.name.sub('Controller', '')}::#{action_name.capitalize}PageObject"
       page_object = page_object_class.constantize rescue nil
       unless page_object.nil?

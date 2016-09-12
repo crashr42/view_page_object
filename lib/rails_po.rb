@@ -23,12 +23,10 @@ module RailsPo
 
     private
     def page_object
-      @page ||= begin
-        page_object_class = "::#{self.class.name.sub('Controller', '')}::#{action_name.capitalize}PageObject"
-        page_object = page_object_class.constantize rescue nil
-        unless page_object.nil?
-          page_object.new(view_assigns)
-        end
+      page_object_class = "::#{self.class.name.sub('Controller', '')}::#{action_name.capitalize}PageObject"
+      page_object = page_object_class.constantize rescue nil
+      unless page_object.nil?
+        @page = page_object.new(view_assigns)
       end
     end
   end

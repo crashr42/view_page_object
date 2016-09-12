@@ -1,5 +1,5 @@
 module RailsPo
-  class PageObjectGenerator < Rails::Generators::Base
+  class CreateGenerator < Rails::Generators::Base
     argument :controller, type: :string
 
     def create_page_object

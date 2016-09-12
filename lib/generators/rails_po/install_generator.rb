@@ -2,7 +2,7 @@ module RailsPo
   class InstallGenerator < Rails::Generators::Base
     def create_initializer_file
       initializer 'rails_po.rb' do
-        'ActionController::Base.prepend ViewPageObject::RendererHook
+        'ActionController::Base.prepend RailsPo::RendererHook
 
 module ApplicationHelper
   def page

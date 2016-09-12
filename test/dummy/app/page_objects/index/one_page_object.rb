@@ -1,6 +1,6 @@
 module Index
   class OnePageObject
-    include ViewPageObject::Base
+    include RailsPo::Base
 
     def hello
       content_tag :h1, "Hello, #{@name}!"

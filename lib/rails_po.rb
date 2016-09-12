@@ -1,4 +1,4 @@
-module ViewPageObject
+module RailsPo
   module Base
     include ActionView::Helpers
 

@@ -3,7 +3,7 @@ require_relative 'boot'
 require 'rails/all'
 
 Bundler.require(*Rails.groups)
-require 'view_page_object'
+require 'rails_po'
 
 module Dummy
   class Application < Rails::Application

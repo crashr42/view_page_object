@@ -1,7 +1,7 @@
 module Demo
   module Index
     class OnePageObject
-      include ViewPageObject::Base
+      include RailsPo::Base
 
       def hello
         "I live in #{@city}!"

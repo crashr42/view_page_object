@@ -1,12 +1,12 @@
 $:.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
-require 'view_page_object/version'
+require 'rails_po/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = 'view_page_object'
-  s.version     = ViewPageObject::VERSION
+  s.version     = RailsPo::VERSION
   s.authors     = ['Nikita Koshkin']
   s.email       = ['nikita.kem@gmail.com']
   s.homepage    = 'https://github.com/crashr42/view_page_object'

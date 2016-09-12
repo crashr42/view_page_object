@@ -1,4 +1,4 @@
-module ViewPageObject
+module RailsPo
   class PageObjectGenerator < Rails::Generators::Base
     argument :controller, type: :string
 
@@ -14,7 +14,7 @@ module ViewPageObject
           end
 
           out << "#{spaces}  class #{action.capitalize}PageObject"
-          out << "#{spaces}    include ViewPageObject::Base"
+          out << "#{spaces}    include RailsPo::Base"
           out << "#{spaces}    "
           out << "#{spaces}    def action"
           out << "#{spaces}      content_tag :h1, \"I'am action `#{action}` from controller `#{controller}!`\""

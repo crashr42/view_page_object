@@ -16,6 +16,7 @@ class RailsPo::Test < ActionDispatch::IntegrationTest
     assert_kind_of RailsPo::Base, @controller.instance_variable_get(:@page)
 
     assert_match '<h1>Hello, Mark!</h1>', @response.body
+    assert_match 'hello from partial', @response.body
   end
 
   test 'two action should not have page object' do

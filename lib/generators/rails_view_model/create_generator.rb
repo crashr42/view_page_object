@@ -1,10 +1,10 @@
-module RailsPo
+module RailsViewModel
   class CreateGenerator < Rails::Generators::Base
     argument :controller, type: :string
 
-    def create_page_object
+    def create_view_model
       args.each do |action|
-        create_file "app/page_objects/#{controller}/#{action}_page_object.rb" do
+        create_file "app/views_models/#{controller}/#{action}_view_model.rb" do
           out    = []
           spaces = ''
 
@@ -13,8 +13,8 @@ module RailsPo
             out << sprintf('%smodule %s', spaces = ' ' * index * 2, namespace.capitalize)
           end
 
-          out << "#{spaces}  class #{action.capitalize}PageObject"
-          out << "#{spaces}    include RailsPo::Base"
+          out << "#{spaces}  class #{action.capitalize}ViewModel"
+          out << "#{spaces}    include RailsViewModel::Base"
           out << "#{spaces}    "
           out << "#{spaces}    def action"
           out << "#{spaces}      content_tag :h1, \"I'am action `#{action}` from controller `#{controller}!`\""

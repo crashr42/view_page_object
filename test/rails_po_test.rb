@@ -1,19 +1,19 @@
 require File.expand_path('../test_helper', __FILE__)
 
 class TestPageObject
-  include RailsPo::Base
+  include RailsViewModel::Base
 
   def hello
     "Hello, #{@name}!"
   end
 end
 
-class RailsPo::Test < ActionDispatch::IntegrationTest
+class RailsViewModel::Test < ActionDispatch::IntegrationTest
   test 'one action should have page object' do
     get index_one_url
 
     assert_not_nil @controller, :page
-    assert_kind_of RailsPo::Base, @controller.instance_variable_get(:@page)
+    assert_kind_of RailsViewModel::Base, @controller.instance_variable_get(:@page)
 
     assert_match '<h1>Hello, Mark!</h1>', @response.body
     assert_match 'hello from partial', @response.body
@@ -29,7 +29,7 @@ class RailsPo::Test < ActionDispatch::IntegrationTest
     get index_three_url
 
     assert_not_nil @controller, :page
-    assert_kind_of RailsPo::Base, @controller.instance_variable_get(:@page)
+    assert_kind_of RailsViewModel::Base, @controller.instance_variable_get(:@page)
 
     assert_match 'Hello, Mark!', @response.body
   end
@@ -38,7 +38,7 @@ class RailsPo::Test < ActionDispatch::IntegrationTest
     get demo_index_one_url
 
     assert_not_nil @controller, :page
-    assert_kind_of RailsPo::Base, @controller.instance_variable_get(:@page)
+    assert_kind_of RailsViewModel::Base, @controller.instance_variable_get(:@page)
 
     assert_match '<h1>I live in Boston!</h1>', @response.body
   end

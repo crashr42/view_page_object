@@ -1,4 +1,4 @@
-module RailsPo
+module RailsViewModel
   module Base
     include ActionView::Helpers
 
@@ -36,6 +36,11 @@ module RailsPo
     def format_namespace(path)
       path.split('/').map(&:capitalize).join('::')
     end
+
+    def build_view_model(namespace, template)
+      view_model_class = "::#{namespace}::#{template}ViewModel"
+      view_model_class.constantize
+    end
   end
 
   module ActionControllerRendererHook
@@ -45,10 +50,9 @@ module RailsPo
       namespace = self.class.name.sub('Controller', '')
       template  = action_name.capitalize
 
-      page_object_class = "::#{namespace}::#{template}PageObject"
-      page_object = page_object_class.constantize rescue return
+      view_model = build_view_model(namespace, template) rescue return
 
-      @page = page_object.new(extract_view_assigns)
+      @page = view_model.new(extract_view_assigns)
     end
   end
 
@@ -59,10 +63,9 @@ module RailsPo
       namespace = format_namespace(args[0].instance_variable_get(:@virtual_path))
       template  = args[1][:partial].capitalize
 
-      page_object_class = "::#{namespace}::#{template}PageObject"
-      page_object = page_object_class.constantize rescue return
+      view_model = build_view_model(namespace, template) rescue return
 
-      args[1][:locals][:page] = page_object.new(extract_view_assigns(args.first).merge(args[1][:locals]))
+      args[1][:locals][:page] = view_model.new(extract_view_assigns(args.first).merge(args[1][:locals]))
     end
   end
 
@@ -74,10 +77,9 @@ module RailsPo
       namespace = format_namespace(context[:prefixes][0...-1].join('/'))
       template  = context[:template].capitalize
 
-      page_object_class = "::#{namespace}::#{template}PageObject"
-      page_object = page_object_class.constantize rescue return
+      view_model = build_view_model(namespace, template) rescue return
 
-      args.first.instance_variable_set(:@page, page_object.new(extract_view_assigns(args.first)))
+      args.first.instance_variable_set(:@page, view_model.new(extract_view_assigns(args.first)))
     end
   end
 end

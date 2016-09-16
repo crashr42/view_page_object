@@ -1,7 +1,7 @@
 module Index
   module One
-    class PartialPageObject
-      include RailsPo::Base
+    class PartialViewModel
+      include RailsViewModel::Base
 
       def hello
         'hello from partial'

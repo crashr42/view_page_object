@@ -1,6 +1,6 @@
 module Index
-  class ThreePageObject
-    include RailsPo::Base
+  class ThreeViewModel
+    include RailsViewModel::Base
 
     def hello
       "Hello, #{@name}!"

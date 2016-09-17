@@ -9,6 +9,6 @@ class IndexController < ApplicationController
   def three
     @name = 'Mark'
 
-    render plain: page.hello
+    render plain: vm.hello
   end
 end

@@ -3,8 +3,8 @@ module RailsViewModel
     argument :controller, type: :string
 
     def create_view_model
-      args.each do |action|
-        create_file "app/views_models/#{controller}/#{action}_view_model.rb" do
+      args.each do |view|
+        create_file "app/views_models/#{controller}/#{view}_view_model.rb" do
           out    = []
           spaces = ''
 
@@ -13,11 +13,11 @@ module RailsViewModel
             out << sprintf('%smodule %s', spaces = ' ' * index * 2, namespace.capitalize)
           end
 
-          out << "#{spaces}  class #{action.capitalize}ViewModel"
+          out << "#{spaces}  class #{view.capitalize}ViewModel"
           out << "#{spaces}    include RailsViewModel::Base"
           out << "#{spaces}    "
-          out << "#{spaces}    def action"
-          out << "#{spaces}      content_tag :h1, \"I'am action `#{action}` from controller `#{controller}!`\""
+          out << "#{spaces}    def hello"
+          out << "#{spaces}      content_tag :h1, \"I'am view `#{view}` from controller `#{controller}!`\""
           out << "#{spaces}    end"
           out << "#{spaces}  end"
 

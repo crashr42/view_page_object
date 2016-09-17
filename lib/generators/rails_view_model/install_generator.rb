@@ -7,8 +7,8 @@ ActionView::TemplateRenderer.prepend RailsViewModel::TemplateRendererHook
 ActionView::PartialRenderer.prepend RailsViewModel::PartialRendererHook
 
 module ApplicationHelper
-  def page
-    @page
+  def vm
+    @vm
   end
 end
 '

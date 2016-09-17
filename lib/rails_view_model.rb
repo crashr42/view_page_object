@@ -13,15 +13,15 @@ module RailsViewModel
     extend ActiveSupport::Concern
 
     def render(*args)
-      page_object(*args)
+      view_model(*args)
       super
     end
 
-    def page
-      page_object
+    def vm
+      view_model
     end
 
-    def page_object(*args)
+    def view_model(*args)
       return unless self.class.name.present?
 
       super
@@ -38,7 +38,13 @@ module RailsViewModel
     end
 
     def build_view_model(namespace, template)
-      view_model_class = "::#{namespace}::#{template}ViewModel"
+      parts = template.split('/').map(&:capitalize)
+
+      if parts.size == 1
+        parts.unshift(namespace)
+      end
+
+      view_model_class = "::#{parts.join('::')}ViewModel"
       view_model_class.constantize
     end
   end
@@ -46,40 +52,45 @@ module RailsViewModel
   module ActionControllerRendererHook
     include RendererHook
 
-    def page_object(*args)
+    def view_model(*args)
       namespace = self.class.name.sub('Controller', '')
       template  = action_name.capitalize
 
       view_model = build_view_model(namespace, template) rescue return
 
-      @page = view_model.new(extract_view_assigns)
+      @vm = view_model.new(extract_view_assigns)
     end
   end
 
   module PartialRendererHook
     prepend RendererHook
 
-    def page_object(*args)
-      namespace = format_namespace(args[0].instance_variable_get(:@virtual_path))
-      template  = args[1][:partial].capitalize
+    def view_model(*args)
+      view, context = args
+      namespace     = format_namespace(@lookup_context.prefixes[0...-1].join('/'))
+      template      = context[:partial]
 
-      view_model = build_view_model(namespace, template) rescue return
+      view_model = build_view_model(namespace, template) rescue nil
 
-      args[1][:locals][:page] = view_model.new(extract_view_assigns(args.first).merge(args[1][:locals]))
+      if view_model.nil?
+        view.remove_instance_variable(:@vm)
+      else
+        context[:locals][:vm] = view_model.new(extract_view_assigns(view).merge(context[:locals]))
+      end
     end
   end
 
   module TemplateRendererHook
     prepend RendererHook
 
-    def page_object(*args)
-      context   = args[1]
-      namespace = format_namespace(context[:prefixes][0...-1].join('/'))
-      template  = context[:template].capitalize
+    def view_model(*args)
+      view, context = args
+      namespace     = format_namespace(@lookup_context.prefixes[0...-1].join('/'))
+      template      = context[:template]
 
       view_model = build_view_model(namespace, template) rescue return
 
-      args.first.instance_variable_set(:@page, view_model.new(extract_view_assigns(args.first)))
+      view.instance_variable_set(:@vm, view_model.new(extract_view_assigns(view)))
     end
   end
 end

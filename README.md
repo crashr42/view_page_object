@@ -1,18 +1,35 @@
-# ViewPageObject
+# Rails view model
 
 It simple `rails` gem given you isolated abstract layer under views likes `helpers`.
 It extend `helpers` concept with given advantages:
-- split helpers into smaller class linked to actions
+- split helpers into smaller class linked to views and partials
 - simpler testing
 - simpler support
 - support namespaced controllers
 
+## Installation
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'rails_view_model'
+```
+
+And then execute:
+```bash
+$ bundle
+```
+
+Or install it yourself as:
+```bash
+$ gem install rails_view_model
+```
+
 ## Usage
 
-Install gem:
+Initialize gem:
 
 ```bash
-bin/rails g view_page_object:install
+bin/rails g rails_view_model:install
 ```
 
 Create controller with action:
@@ -24,7 +41,7 @@ bin/rails g controller index one
 Create page object:
 
 ```bash
-bin/rails g view_page_object:page_object index one
+bin/rails g rails_view_model:create index one
 ```
 
 ### Example
@@ -40,11 +57,11 @@ end
 ```
 
 ```ruby
-app/page_objects/index/one_page_object.rb
+app/views_models/index/one_view_model.rb
 
 module Index
-  class OnePageObject
-    include ViewPageObject::Base
+  class OneViewModel
+    include RailsViewModel::Base
 
     def hello
       content_tag :h1, "Hello, #{@name}!"
@@ -56,38 +73,21 @@ end
 ```ruby
 app/views/index/one.html.erb
 
-<%= page.hello %>
+<%= vm.hello %>
 ```
 
 ```ruby
-test/page_objects/index/one_page_object_test.rb
+test/views_models/index/one_view_model_test.rb
 
 module Index
-  class OnePageObjectTest < ActionDispatch::IntegrationTest
+  class OneViewModelTest < ActionDispatch::IntegrationTest
      test 'hello' do
-       page = Index::OnePageObject.new(name: 'Henry')
+       page = Index::OneViewModel.new(name: 'Henry')
        
        assert_equals 'Hello, Henry!', page.hello
      end
   end
 end
-```
-
-## Installation
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'view_page_object'
-```
-
-And then execute:
-```bash
-$ bundle
-```
-
-Or install it yourself as:
-```bash
-$ gem install view_page_object
 ```
 
 ## License
